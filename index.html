@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="css/style.css" media="screen" title="no title" charset="utf-8">
+
+    <!-- VueJS / CDN -->
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    <!-- Vuelidate / CDN -->
+
+    <script src="script/validators.min.js" charset="utf-8" defer></script>
+    <script src="script/vuelidate.min.js" charset="utf-8" defer></script>
+
+    <!-- Script -->
+
+    <script src="script/script.js" charset="utf-8" defer></script>
+
+    <title>vuelidate form</title>
+</head>
+<body>
+    <header class="centered-text">
+        <h2>VUELIDATE FORM</h2>
+    </header>
+    <main id="app">
+        <form class="form container" v-on:submit.prevent="submitDatas">
+
+            <div v-if="infos" class="input-display">
+                <h3>{{ acknowledgment }}</h3>
+                <ul v-for="(value, key) in infos">
+                    <li>{{ key }} : {{ value }}</li>
+                </ul>
+            </div>
+
+            <div v-else class="inputs-group">
+
+                <div class="form-groups">
+                    <label for="one">Monsieur *</label>
+                    <input type="radio" id="one" name="civility" value="Monsieur" v-model="form.civility">
+                    
+                    <label for="two">Madame *</label>
+                    <input type="radio" id="two" name="civility" value="Madame" v-model="form.civility">
+
+                    <div v-if="$v.form.civility.$error" class="grid-error-Warning">
+                        <p>!!!</p>
+                    </div>
+                    <div v-if="$v.form.civility.$error">
+                        <p v-if="!$v.form.civility.required">Veuillez choisir votre civilite</p>
+                    </div>                
+                </div>
+                
+                <div class="form-groups">
+                    <label for="nom">Nom : *</label>
+                    <input type="text" id="nom" v-model="form.name">
+                    <div v-if="$v.form.name.$error" class="grid-error-Warning">
+                        <p>!!!</p>
+                    </div>
+                    <div v-if="$v.form.name.$error">
+                        <p v-if="!$v.form.name.required">Veuillez saisir votre nom</p>
+                    </div>    
+                </div>
+
+                <div class="form-groups">
+                    <label for="prenom">Prenom :</label>
+                    <input type="text" id="prenom" v-model="form.firstname">
+                </div>
+
+                <div class="form-groups">
+                    <label for="naissance">date de naissance :</label>
+                    <input type="date" id="naissance" name="trip-start" value="1994-01-20" v-model="form.birthdate" min="1940-01-01" max="2010-12-31">
+                </div>
+
+                <div class="form-groups">
+                    <label for="email">email : *</label>
+                    <input type="email" id="email" v-model="form.mail">
+                    <div v-if="$v.form.mail.$error">
+                        <p>!!!</p>
+                    </div>
+                    <div v-if="$v.form.mail.$error">
+                        <p v-if="!$v.form.mail.required">Veuillez entrer une Adresse mail valide</p>
+                    </div>
+                </div>
+
+                <div class="form-groups">
+                    <label for="adresse">adresse :</label>
+                    <input type="text" id="adresse" v-model="form.address">
+                </div>
+
+                <div class="form-groups">
+                    <label for="codepostal">Code Postal :</label>
+                    <input type="number" id="codepostal" v-model="form.postcode" minlength="5" maxlength="5" min="00001" min="99999">
+                </div>
+
+                <div class="form-groups">
+                    <label for="ville">Ville :</label>
+                    <input type="text" id="ville" v-model="form.city">
+                </div>
+                
+                <div class="form-groups">
+                    <label for="message">message :</label>
+                    <textarea id="message" v-model="form.message" rows="4" cols="50">
+                        At w3schools.com you will learn how to make a website. They offer free tutorials in all web development technologies.
+                    </textarea>
+                    <div v-if="$v.form.message.$error">
+                        <p>!!!</p>
+                    </div>
+                    <div v-if="$v.form.message.$error">
+                        <p v-if="!$v.form.message.required">Veuillez saisir votre message</p>
+                    </div>
+                </div>
+
+                <div class="centered-text">
+                    <input type="submit" v-on:click="submitDatas" value="Envoyer">
+                </div>
+
+            </div>
+        </form>
+    </main>
+    <footer class="centered-text">
+        <a href="https://github.com/lagare" target="_blank">Made By Brice</a>
+    </footer>
+</body>
+</html>
+
+
+
